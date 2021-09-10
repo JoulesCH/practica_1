@@ -9,12 +9,11 @@
 struct texto Read(struct texto Texto, char * fileName){
     char ch;
     FILE *fp;
-
     fp = fopen(fileName, "r"); 
 
     if (fp == NULL)
     {
-        perror("Error while opening the file.\n");
+        perror("No existe ese archivo\n");
         exit(EXIT_FAILURE);
     }
 

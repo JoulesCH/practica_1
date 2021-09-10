@@ -1,2 +1,1 @@
-hola mundo
-adios mundó
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tempor, urna eu auctor dignissim, ex nisl ornare diam, aliquam eleifend.
