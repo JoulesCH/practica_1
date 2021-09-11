@@ -5,8 +5,14 @@ struct texto{
     int cap;
 };
 
-struct words{
-        char* str;
-        struct words* next;
+typedef struct word{
+    char * ptr;
+    int tam;
+    int cap;
+}Word;
+
+typedef struct words{
+        Word * ptr;
         int tam;
-};
+        int cap;
+}Words;

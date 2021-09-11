@@ -86,30 +86,28 @@ struct texto Pop_Front(struct texto ar){
     return ar;
 }
 
-struct texto Insert(struct texto ar, char info, int pos){
-    if(ar.tam == ar.cap){
-        Extender_ar(&ar);
+void Insert(struct texto * ar, char info, int pos){
+    if((ar -> tam) == (ar->cap)){
+        Extender_ar(ar);
     }
 
-    for(int n=ar.tam; n> pos ;n--){
-        *(ar.ptr + n * sizeof(char)) = *(ar.ptr + (n-1) * sizeof(char));
+    for(int n=(ar -> tam); n> pos ;n--){
+        *((ar->ptr) + n * sizeof(char)) = *((ar->ptr) + (n-1) * sizeof(char));
     }
 
-    *(ar.ptr + pos * sizeof(char)) = info;
-    ar.tam ++;
-    return ar;
+    *((ar->ptr)+ pos * sizeof(char)) = info;
+    (ar -> tam) ++;
 
 }
-struct texto Remove(struct texto ar, int pos){
-    for(int n=pos; n< ar.tam ;n++){
-        *(ar.ptr + n * sizeof(char)) = *(ar.ptr + (n+1) * sizeof(char));
+void Remove(struct texto *  ar, int pos){
+    for(int n=pos; n< (ar -> tam) ;n++){
+        *((ar->ptr) + n * sizeof(char)) = *((ar->ptr) + (n+1) * sizeof(char));
     }
 
-    ar.tam--;
-    if(ar.tam < ar.cap/2){
-        Contraer_ar(&ar);
+    (ar->tam)--;
+    if((ar->tam) < (ar->cap)/2){
+        Contraer_ar(ar);
     }
-    return ar;
 }
 struct texto Set(struct texto ar, char info, int pos){
         *(ar.ptr + pos* sizeof(char)) = info;

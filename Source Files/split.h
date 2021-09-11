@@ -6,48 +6,20 @@
 #include "models.h"
 #include "utils.h"
 
-struct words* create_words(char* word) {
-        struct words* newWords = (struct words*) malloc(100*sizeof(struct words));
-        if (NULL != newWords){
-                newWords->str = word;
-                newWords->tam = 0;
-                newWords->next = NULL;
-        }
-        return newWords;
-}
-
-struct words* add_word(struct words* Words, char* word) {
-        struct words* newWords = create_words(word);
-        if (NULL != newWords) {
-                newWords->next = Words;
-               
-        }
-        return newWords;
-}
-
-struct words* Split(struct texto Texto){
-        char *ch = (char*) malloc(sizeof(char));
-        *ch = '\0';
-        struct words* textWords = create_words(ch);
-        int i = 0;
-        
-        struct texto word = {NULL, 0,0};
-
-        while (1){
-                *ch = Get(Texto, i);
-                if(*ch == '\0'){
-                        textWords = add_word(textWords, word.ptr);
-                        break;
-                } else if(*ch == ' ' or *ch =='\n'){
-                        
-                        textWords = add_word(textWords, word.ptr);
-                        word = {NULL, 0,0};
-                }else{
-                        word = Push_Back(word, *ch);
+void Split(struct texto Texto, Words * words){
+        int wordSize = 0, inicio , final = -1;
+        char ch;
+        for(int i = 0; *(Texto.ptr + i*sizeof(char)) != '\0'; i++){
+                if(*(Texto.ptr + i*sizeof(char)) == ' '){
+                        inicio = final+1;
+                        final = i;
+                        printf("\n");
+                        for(int j = inicio; j<final; j++){
+                                printf("%c", *(Texto.ptr + j*sizeof(char)));
+                        }
                 }
-                i++;
+                
         }
-        
-        return textWords;
+       
 }
 

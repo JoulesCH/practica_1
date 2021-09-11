@@ -9,6 +9,7 @@
 #include "models.h"
 #include "count.h"
 #include "split.h"
+#include "clean.h"
 // Constants
 #define MAX_SIZE_FILE_NAME 256
 
@@ -17,8 +18,9 @@ int main(int argc, char * argv[]){
     setlocale(LC_ALL, "");
     // Declaration of variables
     struct texto Text = {NULL, 0,0};
-    struct words* Words; 
-    
+    Words words ={NULL, 0, 1} ; 
+    Word * p = (Word * ) malloc(1*sizeof(Word));
+    words.ptr = p;
     // Get the file name
     char *inputFile = (char*) malloc(MAX_SIZE_FILE_NAME*sizeof(char));
     char *outputFile = (char*) malloc(MAX_SIZE_FILE_NAME*sizeof(char));
@@ -42,10 +44,15 @@ int main(int argc, char * argv[]){
     if(Text.ptr == NULL)
         printf("Archivo vacio");
     
+    printf("TEXTO LEIDO: %s\n", Text.ptr);
+    //Clean text
+    Clean(&Text);
+    printf("TEXTO LIMPIO: %s\n", Text.ptr);
     // Split the text into struct array of char[]
-    Words = Split(Text);
+    Split(Text, &words); 
+    //Words = Split(Text);
     // Count the words
-    Words = Count(Words);
+    //Words = Count(Words);
     // Order the string array
     // Formating
     // Ouput file
