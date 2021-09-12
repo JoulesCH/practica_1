@@ -39,15 +39,14 @@ void Write(Cuentas cuentas, char * outputFile){
                 fprintf(fp,"\n %d. %s ", k,GetCuenta(cuentas, i).ptr );
             else
                 fprintf(fp,"\n  %d. %s ", k,GetCuenta(cuentas, i).ptr );
-        }
-        for(int j=0; j<espacios-GetCuenta(cuentas, i).tam;j++ ){ // espacios relativos al tamanio de la palabra
-            fprintf(fp, " ");
+            
+            for(int j=0; j<espacios-GetCuenta(cuentas, i).tam;j++ ){ // espacios relativos al tamanio de la palabra
+                fprintf(fp, " ");
+            }
+            
+            fprintf(fp, "%d", GetCuenta(cuentas, i).count );
         }
         
-        fprintf(fp, "%d", GetCuenta(cuentas, i).count );
-        if( GetCuenta(cuentas, i).count == 4){
-            printf("El caracter que se busca es: %d", *GetCuenta(cuentas, i).ptr );
-        }
     }
     fclose(fp);
 }

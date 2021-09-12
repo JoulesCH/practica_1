@@ -48,7 +48,7 @@ int main(int argc, char * argv[]){ // Se pide argv para recibir los nombres de e
         inputFile = argv[1];
         outputFile = argv[2];
     }
-
+	
     // Se lee el archivo y se almacena en la estructura Text
     Text = Read(Text, inputFile, &lettersCount);
     // Se revisa que el archivo no este en blanco
@@ -59,13 +59,15 @@ int main(int argc, char * argv[]){ // Se pide argv para recibir los nombres de e
     
     // limpiar caracteres especiales
     Clean(&Text, &lettersCount);
-
+	
     // Se inicializa la estructura que contendra las palabras
-    Words words ={NULL, 0, lettersCount} ; 
-    words.ptr  = (Word * ) malloc(lettersCount*sizeof(Word));
+    Words words ={NULL, 0, lettersCount*10} ; 
+    words.ptr  = (Word * ) malloc(lettersCount*10*sizeof(Word));
+     
     // se divide el texto en palabras y se libera Text.ptr
     Split(Text, &words, lettersCount); 
     free(Text.ptr);
+   
     
     // Se inicializa la estructura que contendran las palabras con su frecuencia
     Cuentas cuentas ={NULL, 0, lettersCount*10} ; 
