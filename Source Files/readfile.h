@@ -8,7 +8,7 @@
 
 struct texto Read(struct texto Texto, char * fileName, int *tamanio){
     /*
-    Rutina que lee el archivo 
+    Funcion que lee el archivo 
     
     ARGUMENTOS
     __________
