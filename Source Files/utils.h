@@ -44,8 +44,77 @@ struct texto Push_Back(struct texto ar, char info){
     return ar;
     
 }
+void Extender_ar_word(Word * ar){
+    char *p = (char*) malloc(((ar->cap)*2)* sizeof(char));
+    
+    for(int n=0; n<(ar->cap);n++){
+        *(p+n*sizeof(char)) = *((ar->ptr) + n *sizeof(char));
+    }
 
+    (ar->ptr) = p;
+    (ar->cap)= 2*(ar->cap);
 
+}
+
+void Push_Back_Word(Word * ar, char info){
+    //Verificar si hay 
+    if((ar->tam) == (ar->cap)){
+        Extender_ar_word(ar);
+    }
+    *((ar->ptr) + (ar->tam) * sizeof(char)) = info;
+    (ar->tam)++;
+}
+char GetChar(Word ar, int pos){
+    return *((ar.ptr) + pos * sizeof(char));
+}
+
+void Extender_ar_words(Words * ar){
+    Word *p = (Word*) malloc(((ar->cap)*10)* sizeof(Word));
+    
+    for(int n=0; n<(ar->cap);n++){
+        *(p+n*sizeof(Word)) = *((ar->ptr) + n *sizeof(Word));
+    }
+
+    (ar->ptr) = p;
+    (ar->cap)= 10*(ar->cap);
+
+}
+
+void Push_Back_Words(Words * ar, Word info){
+    //Verificar si hay 
+    if((ar->tam) == (ar->cap)){
+        Extender_ar_words(ar);
+    }
+    *((ar->ptr) + (ar->tam) * sizeof(Word)) = info;
+    (ar->tam)++;
+}
+Word GetWords(Words ar, int pos){
+    return *((ar.ptr) + pos * sizeof(Word));
+}
+void ContraerWords(Words * arr){
+    Words ar = *arr;
+    Word *p = (Word*) malloc((ar.cap/2)* sizeof(Word));
+    
+    for(int n=0; n<ar.tam;n++){
+        *(p+n*sizeof(Word)) = *(ar.ptr + n *sizeof(Word));
+    }
+
+    ar.ptr = p;
+    ar.cap = ar.cap/2;
+
+    *arr = ar;
+
+}
+void RemoveWords(Words *  ar, int pos){
+    for(int n=pos; n< (ar -> tam) ;n++){
+        *((ar->ptr) + n * sizeof(Word)) = *((ar->ptr) + (n+1) * sizeof(Word));
+    }
+
+    (ar->tam)--;
+    if((ar->tam) < (ar->cap)/2){
+        ContraerWords(ar);
+    }
+}
 struct texto Pop_Back(struct texto ar){
     
     ar.tam--;

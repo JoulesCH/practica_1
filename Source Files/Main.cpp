@@ -17,15 +17,15 @@ int main(int argc, char * argv[]){
     // Using accents
     setlocale(LC_ALL, "");
     // Declaration of variables
-    struct texto Text = {NULL, 0,0};
-    Words words ={NULL, 0, 1} ; 
-    Word * p = (Word * ) malloc(1*sizeof(Word));
-    words.ptr = p;
+    struct texto Text = {NULL, 0,100};
+    Text.ptr = (char*) malloc(100*sizeof(char));
+
+    int lettersCount;
     // Get the file name
     char *inputFile = (char*) malloc(MAX_SIZE_FILE_NAME*sizeof(char));
     char *outputFile = (char*) malloc(MAX_SIZE_FILE_NAME*sizeof(char));
     strcpy(outputFile, "OUTPUT_");
-
+    
     if(argc == 1){
         printf("Ingresa el nombre del archivo a leer: ");
         fgets(inputFile, MAX_SIZE_FILE_NAME, stdin);
@@ -39,23 +39,26 @@ int main(int argc, char * argv[]){
         outputFile = argv[2];
     }
     // Read the file
-    Text = Read(Text, inputFile);
+    Text = Read(Text, inputFile, &lettersCount);
     // Check if the file is blank
     if(Text.ptr == NULL)
         printf("Archivo vacio");
-    
-    printf("TEXTO LEIDO: %s\n", Text.ptr);
     //Clean text
-    Clean(&Text);
-    printf("TEXTO LIMPIO: %s\n", Text.ptr);
+    Clean(&Text, &lettersCount);
+
     // Split the text into struct array of char[]
-    Split(Text, &words); 
-    //Words = Split(Text);
+    Words words ={NULL, 0, lettersCount} ; 
+    words.ptr  = (Word * ) malloc(lettersCount*sizeof(Word));
+
+    Split(Text, &words, lettersCount); 
+    
     // Count the words
-    //Words = Count(Words);
+    Count(words);
     // Order the string array
     // Formating
     // Ouput file
+    free(Text.ptr);
+    free(words.ptr);
 
     return 0;
 }
