@@ -9,7 +9,8 @@ Práctica 1
     - word2vec
 - **Diagrama**: Entregar en forma de diagrama de bloques o pseudocódigo el algoritmo que se diseñó para generar el programa.
 ![img](./static/arquitectura.png)
-
+Jerarquía de carpetas:
+![img](./static/jerarquia.png)
 ### Requerimientos 📋
 El código debe ser de tipo .c o .cpp. El código debe estar **tabulado y comentado**.
 El programa debe ser capaz de:

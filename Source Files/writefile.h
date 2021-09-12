@@ -49,5 +49,19 @@ void Write(Cuentas cuentas, char * outputFile){
         
     }
     fclose(fp);
+
+    // Creacion del archivo json
+
+    FILE * json;
+    json = fopen("output.json", "w+");
+    fprintf(json, "{");
+    for(int i=0; i< cuentas.tam; i++)
+        if(*GetCuenta(cuentas, i).ptr != 0){
+            fprintf(json,"\n\t%c%s%c: %d", 34, GetCuenta(cuentas, i).ptr, 34, GetCuenta(cuentas, i).count );
+            if (i!= cuentas.tam-1)
+                fprintf(json, ",");
+        }
+    fprintf(json, "\n}");
+    fclose(json);
 }
 
