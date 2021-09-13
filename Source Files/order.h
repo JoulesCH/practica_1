@@ -18,9 +18,8 @@ void Order(Cuentas * cuentas){
 
     // Se inicializa una estructura Cuenta que sirve como auxiliar para hacer el cambio
     Cuenta aux = {NULL, 0, 0, 0};
-
-    // Se utiliza Bubble Sort para hacer el ordenamiento
-    for(int i =0; i<(cuentas->tam)-1; i++){
+    // Se utiliza Bubble Sort para hacer el ordenamiento c.r. a las frecuencias 
+    for(int i =0; i<(cuentas->tam); i++){
         for (int j = 0; j < (cuentas->tam)-i-1; j++){
             if(GetCuenta(*cuentas, j).count < GetCuenta(*cuentas, j+1).count ){
                 aux = GetCuenta(*cuentas, j);
@@ -31,4 +30,17 @@ void Order(Cuentas * cuentas){
 
         }
     }
+    // Se utiliza Bubble Sort para hacer el ordenamiento alfabetico 
+    for(int i=0; i<(cuentas->tam); i++){
+        for(int j=0; j<(cuentas->tam)-1-i; j++){
+            if(strcmp(GetCuenta(*cuentas, j).ptr, GetCuenta(*cuentas, j+1).ptr) > 0 && GetCuenta(*cuentas, j).count == GetCuenta(*cuentas, j+1).count ){
+                aux = GetCuenta(*cuentas, j);
+                *((cuentas -> ptr) + j*sizeof(Cuenta)) = *((cuentas -> ptr) + (j+1)*sizeof(Cuenta)); 
+                *((cuentas -> ptr) + (j+1)*sizeof(Cuenta)) = aux;
+                aux = {NULL, 0, 0, 0};
+            }
+        }
+    }
+
+    
 }

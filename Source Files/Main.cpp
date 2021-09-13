@@ -73,7 +73,7 @@ int main(int argc, char * argv[]){ // Se pide argv para recibir los nombres de e
     Cuentas cuentas ={NULL, 0, lettersCount*10} ; 
     cuentas.ptr  = (Cuenta * ) malloc(lettersCount*10*sizeof(Cuenta));
     
-    // se cuentas las palabras y se libera words.ptr
+    // se cuentan las palabras y se libera words.ptr
     Count(words, &cuentas);
     free(words.ptr);
     

@@ -31,8 +31,9 @@ void Write(Cuentas cuentas, char * outputFile){
 
     // se empieza a llenar el archivo usando fprintf
     for(int i=0; i< cuentas.tam; i++){
-        k++;
+        
         if(*GetCuenta(cuentas, i).ptr != 0){ // si el caracter no es un espacio
+            k++;
             if(k>99)
                 fprintf(fp,"\n%d. %s ", k,GetCuenta(cuentas, i).ptr );
             else if(k>9 )
