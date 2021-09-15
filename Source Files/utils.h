@@ -6,14 +6,14 @@
 
 void Extender_ar(struct texto * arr){
     struct texto ar = *arr;
-    char *p = (char*) malloc((ar.cap*2)* sizeof(char));
+    char *p = (char*) malloc((ar.cap*10)* sizeof(char));
     
     for(int n=0; n<ar.cap;n++){
         *(p+n*sizeof(char)) = *(ar.ptr + n *sizeof(char));
     }
 
     ar.ptr = p;
-    ar.cap = 2*ar.cap;
+    ar.cap = 10*ar.cap;
 
     *arr = ar;
 
@@ -45,14 +45,14 @@ struct texto Push_Back(struct texto ar, char info){
     
 }
 void Extender_ar_word(Word * ar){
-    char *p = (char*) malloc(((ar->cap)*2)* sizeof(char));
+    char *p = (char*) malloc(((ar->cap)*10)* sizeof(char));
     
     for(int n=0; n<(ar->cap);n++){
         *(p+n*sizeof(char)) = *((ar->ptr) + n *sizeof(char));
     }
 
     (ar->ptr) = p;
-    (ar->cap)= 2*(ar->cap);
+    (ar->cap)= 10*(ar->cap);
 
 }
 
@@ -111,10 +111,36 @@ void RemoveWords(Words *  ar, int pos){
     }
 
     (ar->tam)--;
-    if((ar->tam) < (ar->cap)/2){
-        ContraerWords(ar);
-    }
+    //if((ar->tam) < (ar->cap)/2){
+    //    ContraerWords(ar);
+    //}
 }
+Cuenta GetCuenta(Cuentas ar, int pos){
+    return *((ar.ptr) + pos * sizeof(Cuenta));
+}
+void Extender_ar_cuentas(Cuentas * ar){
+    Cuenta *p = (Cuenta*) malloc(((ar->cap)*10)* sizeof(Cuenta));
+    
+    for(int n=0; n<(ar->cap);n++){
+        *(p+n*sizeof(Cuenta)) = *((ar->ptr) + n *sizeof(Cuenta));
+    }
+
+    (ar->ptr) = p;
+    (ar->cap)= 10*(ar->cap);
+
+}
+void InsertCuentas(Cuentas * ar, Cuenta info, int pos){
+    *((ar->ptr)+ pos * sizeof(char)) = info;
+}
+void Push_Back_Cuentas(Cuentas * ar, Cuenta info){
+    //Verificar si hay 
+    if((ar->tam) == (ar->cap)){
+        Extender_ar_cuentas(ar);
+    }
+    *((ar->ptr) + (ar->tam) * sizeof(Cuenta)) = info;
+    (ar->tam)++;
+}
+
 struct texto Pop_Back(struct texto ar){
     
     ar.tam--;

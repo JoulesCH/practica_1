@@ -6,8 +6,9 @@
 #include "models.h"
 #include "utils.h"
 
-void Count( Words words){
+void Count( Words words, Cuentas *cuentas){
     int cuenta, bandera;
+    Cuenta cuenta_ar={NULL, 0,0,0};
     for(int i=0; i<words.tam; i++){
         cuenta = 0;
         for(int j=i; j<words.tam; j++){
@@ -20,12 +21,20 @@ void Count( Words words){
                     }
                 }
                 if(bandera == 0){
-                    if(cuenta != 0)
+                    if(cuenta != 0){
                         RemoveWords(&words, j);
+                    }
                     cuenta++;
                 }
             }
         }
-        printf(" \n%s, cuenta: %d", GetWords(words, i).ptr, cuenta );
+        printf(" ");
+        //cuenta_ar.ptr = (char *) malloc(GetWords(words, i).tam*sizeof(char));
+        cuenta_ar.cap =  GetWords(words, i).cap;
+        cuenta_ar.tam =  GetWords(words, i).tam;
+        cuenta_ar.ptr =  GetWords(words, i).ptr;
+        cuenta_ar.count =  cuenta;
+        Push_Back_Cuentas(cuentas, cuenta_ar);
+        cuenta_ar={NULL, 0,0,0};
     }
 }

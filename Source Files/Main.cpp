@@ -10,6 +10,8 @@
 #include "count.h"
 #include "split.h"
 #include "clean.h"
+#include "writefile.h"
+#include "order.h"
 // Constants
 #define MAX_SIZE_FILE_NAME 256
 
@@ -19,7 +21,6 @@ int main(int argc, char * argv[]){
     // Declaration of variables
     struct texto Text = {NULL, 0,100};
     Text.ptr = (char*) malloc(100*sizeof(char));
-
     int lettersCount;
     // Get the file name
     char *inputFile = (char*) malloc(MAX_SIZE_FILE_NAME*sizeof(char));
@@ -43,6 +44,7 @@ int main(int argc, char * argv[]){
     // Check if the file is blank
     if(Text.ptr == NULL)
         printf("Archivo vacio");
+    
     //Clean text
     Clean(&Text, &lettersCount);
 
@@ -52,13 +54,22 @@ int main(int argc, char * argv[]){
 
     Split(Text, &words, lettersCount); 
     
-    // Count the words
-    Count(words);
-    // Order the string array
-    // Formating
-    // Ouput file
     free(Text.ptr);
+    // Count the words
+    
+
+    Cuentas cuentas ={NULL, 0, lettersCount*10} ; 
+    cuentas.ptr  = (Cuenta * ) malloc(lettersCount*10*sizeof(Cuenta));
+    
+    
+    Count(words, &cuentas);
+    // Order the string array
     free(words.ptr);
+    
+    Order(&cuentas);
+    // Ouput file
+    Write(cuentas, outputFile);
+    free(cuentas.ptr);
 
     return 0;
 }
