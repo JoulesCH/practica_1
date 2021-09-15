@@ -1,73 +1,84 @@
-// Built in headers
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <wchar.h>
+// BUILT-IN HEADERS
+#include <stdlib.h> // para malloc
+#include <string.h> // unicamente para strcat
+#include <stdio.h> 
+#include <wchar.h> // para usar caracteres especiales
 #include <locale.h>
-// Local headers
-#include "readfile.h"
-#include "models.h"
-#include "count.h"
-#include "split.h"
-#include "clean.h"
-#include "writefile.h"
-#include "order.h"
-// Constants
+
+// LOCAL HEADERS
+#include "models.h" // definicion de estructuras usadas
+#include "readfile.h" // leer el archivo
+#include "clean.h" // limpiar caracteres especiales
+#include "split.h"  // dividir el texto en plabras
+#include "count.h" // contar las plabras
+#include "order.h" // ordenar de mayor a menor frecuencia
+#include "writefile.h" // escribir el archivo
+
 #define MAX_SIZE_FILE_NAME 256
 
-int main(int argc, char * argv[]){
-    // Using accents
+int main(int argc, char * argv[]){ // Se pide argv para recibir los nombres de entrada y salida de los archivos
+    
+    // Configurar el uso de acentos
     setlocale(LC_ALL, "");
-    // Declaration of variables
+
+    // Inicializacion de la estructura que contiene el texto
     struct texto Text = {NULL, 0,100};
     Text.ptr = (char*) malloc(100*sizeof(char));
-    int lettersCount;
-    // Get the file name
+    int lettersCount; // Contendra el numero de letras en el archivo
+
+
+    // Inicializacion de los nombres del archivo de entrada y de salida
     char *inputFile = (char*) malloc(MAX_SIZE_FILE_NAME*sizeof(char));
     char *outputFile = (char*) malloc(MAX_SIZE_FILE_NAME*sizeof(char));
     strcpy(outputFile, "OUTPUT_");
     
-    if(argc == 1){
+    if(argc == 1){ //Si el usuario no ingresa ningun argumento, se le solicita el nombre de archivo a leer
         printf("Ingresa el nombre del archivo a leer: ");
         fgets(inputFile, MAX_SIZE_FILE_NAME, stdin);
-        inputFile[strlen(inputFile)-1]='\0';    
+        inputFile[strlen(inputFile)-1]='\0';
+        // Se crea el nombre de archivo de salida, con el formato OUTPUT_nombreDelArchivoALeer.txt
         strcat(outputFile, inputFile);
-    } else if(argc == 2){
+    } else if(argc == 2){ // Si el usuario ingresa un argumento, se toma como el nombre de archivo a leer
         inputFile = argv[1];
+        // Se crea el nombre de archivo de salida, con el formato OUTPUT_nombreDelArchivoALeer.txt
         strcat(outputFile, inputFile);
-    } else if(argc == 3){
+    } else if(argc == 3){ 
+        // Si el usuario ingresa dos argumentos, se toma el primero como el nombre de archivo a leer
+        // y el segundo como el nombre de archivo de salida
         inputFile = argv[1];
         outputFile = argv[2];
     }
-    // Read the file
+
+    // Se lee el archivo y se almacena en la estructura Text
     Text = Read(Text, inputFile, &lettersCount);
-    // Check if the file is blank
-    if(Text.ptr == NULL)
+    // Se revisa que el archivo no este en blanco
+    if(Text.ptr == NULL){
         printf("Archivo vacio");
+        return 0;
+    }
     
-    //Clean text
+    // limpiar caracteres especiales
     Clean(&Text, &lettersCount);
 
-    // Split the text into struct array of char[]
+    // Se inicializa la estructura que contendra las palabras
     Words words ={NULL, 0, lettersCount} ; 
     words.ptr  = (Word * ) malloc(lettersCount*sizeof(Word));
-
+    // se divide el texto en palabras y se libera Text.ptr
     Split(Text, &words, lettersCount); 
-    
     free(Text.ptr);
-    // Count the words
     
-
+    // Se inicializa la estructura que contendran las palabras con su frecuencia
     Cuentas cuentas ={NULL, 0, lettersCount*10} ; 
     cuentas.ptr  = (Cuenta * ) malloc(lettersCount*10*sizeof(Cuenta));
     
-    
+    // se cuentas las palabras y se libera words.ptr
     Count(words, &cuentas);
-    // Order the string array
     free(words.ptr);
     
+    // se ordena de mayor a menor frecuencia
     Order(&cuentas);
-    // Ouput file
+
+    // se crea el archivo de salida, escribiendolo y liberando cuentas.ptr
     Write(cuentas, outputFile);
     free(cuentas.ptr);
 

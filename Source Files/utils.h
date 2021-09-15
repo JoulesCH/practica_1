@@ -1,7 +1,8 @@
+// Se contienen las operaciones de cada estructura (push back, get, remove, etc.)
 #pragma once
-// Built in headers
+// BUILT-IN HEADERS
 #include <stdlib.h>
-// Local headers
+// LOCAL HEADERS
 #include "models.h"
 
 void Extender_ar(struct texto * arr){
@@ -200,9 +201,9 @@ void Remove(struct texto *  ar, int pos){
     }
 
     (ar->tam)--;
-    if((ar->tam) < (ar->cap)/2){
-        Contraer_ar(ar);
-    }
+    //if((ar->tam) < (ar->cap)/2){
+    //    Contraer_ar(ar);
+    //}
 }
 struct texto Set(struct texto ar, char info, int pos){
         *(ar.ptr + pos* sizeof(char)) = info;
